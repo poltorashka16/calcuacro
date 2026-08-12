@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <link rel="stylesheet" href="main.css">
+  <title>Калькулятор РРЦ</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">R</div>
+        <div>
+          <div class="brand-title">Калькулятор РРЦ</div>
+          <div class="brand-subtitle">Расчёт материалов, обработки и доставки</div>
+        </div>
+      </div>
+
+      <nav class="calculator-switcher" aria-label="Калькуляторы">
+        <a href="https://poltorashka16.github.io/Cl.Rus.github.io/" class="switch active">Россия</a>
+        <a href="https://poltorashka16.github.io/OPT.github.io/" class="switch">Индия · ОПТ</a>
+      </nav>
+
+      <button class="ghost-button" id="resetButton" type="button">Очистить</button>
+    </header>
+
+    <div class="page-grid">
+      <main class="content">
+
+        <section class="hero">
+          <div>
+            <span class="eyebrow">РОЗНИЦА · РОССИЯ</span>
+            <h1>Рассчитайте стоимость заказа</h1>
+            <p>Заполните только необходимые поля. Стоимость пересчитывается автоматически.</p>
+          </div>
+          <div class="hero-badge">₽</div>
+        </section>
+
+        <section class="card" id="detailsSection">
+          <div class="section-head">
+            <div>
+              <span class="step">01</span>
+              <h2>Размеры деталей</h2>
+              <p>Укажите размеры каждой детали в миллиметрах.</p>
+            </div>
+            <div class="section-total">
+              <span>Площадь</span>
+              <strong id="detailsAreaTop">0,00 м²</strong>
+            </div>
+          </div>
+
+          <div class="details-table-wrap">
+            <table class="data-table" id="productTable6">
+              <thead>
+                <tr>
+                  <th>Деталь</th>
+                  <th>Длина, мм</th>
+                  <th>Ширина, мм</th>
+                  <th>Количество</th>
+                  <th>Периметр, м.п.</th>
+                  <th>Площадь, м²</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <td><strong>Итого</strong></td>
+                  <td id="totalLength">0,00 м</td>
+                  <td id="totalWidth">0,00 м</td>
+                  <td id="totalQuantity">0</td>
+                  <td id="totalPerimeter">0,00</td>
+                  <td id="totalArea">0,00</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </section>
+
+        <section class="card compact-card">
+          <div class="section-head">
+            <div>
+              <span class="step">02</span>
+              <h2>Материал и вес</h2>
+              <p>Вес рассчитывается по общей площади деталей.</p>
+            </div>
+          </div>
+          <div class="material-grid">
+            <label class="field">
+              <span>Толщина HPL compact, мм</span>
+              <input id="thickness" class="number-input" type="number" min="0" step="0.1" placeholder="Например, 12">
+            </label>
+            <div class="result-box">
+              <span>Вес деталей</span>
+              <strong id="totalWeight">0 кг</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="countertopsSection">
+          <div class="section-head">
+            <div>
+              <span class="step">03</span>
+              <h2>Материал столешниц</h2>
+              <p>Выберите нужный размер и укажите количество листов.</p>
+            </div>
+            <div class="section-total">
+              <span>Стоимость</span>
+              <strong id="countertopsTotal">0 ₽</strong>
+            </div>
+          </div>
+
+          <div id="countertopsList" class="catalog-list"></div>
+        </section>
+
+        <section class="card" id="processingSection">
+          <div class="section-head">
+            <div>
+              <span class="step">04</span>
+              <h2>Обработка</h2>
+              <p>Укажите количество только для нужных услуг.</p>
+            </div>
+            <div class="section-total">
+              <span>Стоимость</span>
+              <strong id="processingTotal">0 ₽</strong>
+            </div>
+          </div>
+
+          <div id="processingList" class="service-list"></div>
+        </section>
+
+        <section class="card" id="deliverySection">
+          <div class="section-head">
+            <div>
+              <span class="step">05</span>
+              <h2>Упаковка и доставка</h2>
+              <p>Добавьте дополнительные услуги при необходимости.</p>
+            </div>
+            <div class="section-total">
+              <span>Стоимость</span>
+              <strong id="deliveryTotal">0 ₽</strong>
+            </div>
+          </div>
+
+          <div id="deliveryList" class="service-list"></div>
+        </section>
+
+        <div class="bottom-actions">
+          <button class="secondary-button" id="resetButtonBottom" type="button">Сбросить данные</button>
+          <button class="primary-button" id="calculateButton" type="button">Рассчитать итог</button>
+        </div>
+      </main>
+
+      <aside class="summary-card">
+        <div class="summary-sticky">
+          <div class="summary-head">
+            <div>
+              <span class="eyebrow">ВАШ РАСЧЁТ</span>
+              <h2>Итоговая стоимость</h2>
+            </div>
+            <div class="summary-icon">₽</div>
+          </div>
+
+          <div class="summary-main" id="overallTotal">0 ₽</div>
+
+          <div class="summary-lines">
+            <div><span>Столешницы</span><strong id="summaryCountertops">0 ₽</strong></div>
+            <div><span>Обработка</span><strong id="summaryProcessing">0 ₽</strong></div>
+            <div><span>Упаковка и доставка</span><strong id="summaryDelivery">0 ₽</strong></div>
+          </div>
+
+          <div class="summary-stats">
+            <div>
+              <span>Площадь</span>
+              <strong id="summaryArea">0,00 м²</strong>
+            </div>
+            <div>
+              <span>Периметр</span>
+              <strong id="summaryPerimeter">0,00 м.п.</strong>
+            </div>
+            <div>
+              <span>Вес</span>
+              <strong id="summaryWeight">0 кг</strong>
+            </div>
+          </div>
+
+          <button class="primary-button wide" id="calculateButtonSide" type="button">Показать итог</button>
+          <p class="summary-note">Все суммы отображаются в рублях. Расчёт обновляется автоматически при изменении данных.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="modal" id="resultModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" aria-label="Закрыть" data-close-modal>×</button>
+      <span class="eyebrow">ГОТОВО</span>
+      <h2 id="modalTitle">Стоимость заказа</h2>
+      <div class="modal-total" id="modalTotal">0 ₽</div>
+      <div class="modal-details" id="modalDetails"></div>
+      <button class="primary-button wide" type="button" data-close-modal>Понятно</button>
+    </div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
